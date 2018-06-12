@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crypto.cs" />
+    <Compile Include="CryptoTests.cs" />
     <Compile Include="UserTokenTest.cs" />
     <Compile Include="UserToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
