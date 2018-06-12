@@ -10,6 +10,10 @@ namespace Tanker
 
     public class Crypto
     {
+        public const int BlockHashSize = 32;
+        public const int CheckHashBlockSize = 16;
+        public const int UserSecretSize = 32;
+
         public static byte[] GenericHash(byte[] message, int size)
         {
             return Sodium.GenericHash.Hash(message, null, size);
