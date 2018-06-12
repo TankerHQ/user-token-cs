@@ -9,5 +9,12 @@ namespace Tanker
         {
             Assert.AreEqual(42, 40 + 2);
         }
-	}
+
+        [Test]
+        public void TestSodiumVersion()
+        {
+
+        }
+
+    }
 }
