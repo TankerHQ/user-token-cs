@@ -4,20 +4,11 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace Tanker
-{
-    public class UserToken
-    {
-        // Note: those should match the key in the JSON file, 
-        // hence the snake case
-        public string delegation_signature { get; set; }
-        public string ephemeral_private_signature_key { get; set; }
-        public string ephemeral_public_signature_key { get; set; }
-        public string user_id { get; set; }
-        public string user_secret { get; set; }
-    }
 
-	public class UserTokenTest
+namespace Tanker
+
+ { 
+public class UserTokenTest
 	{
         const string TrustchainId = "AzES0aJwDCej9bQVY9AUMZBCLdX0msEc/TJ4DOhZaQs=";
         const string TrustchainPrivateKey = "cBAq6A00rRNVTHicxNHdDFuq6LNUo6gAz58oKqy9CGd054sGkfPYgXftRCRLfqxeiaoRwQCNLIKxdnuKuf1RAA==";
@@ -75,10 +66,8 @@ namespace Tanker
         private string GenerateTestToken()
         {
             string userId = "steve@tanker.io";
-            string token = SDK.GenerateUserToken(userId,
-                TrustchainId,
-                TrustchainPrivateKey);
-            return token;
+            var token = new UserToken(userId, TrustchainId, TrustchainPrivateKey);
+            return token.Serialize();
         }
         
         private UserToken ParseBase64Token(string token)

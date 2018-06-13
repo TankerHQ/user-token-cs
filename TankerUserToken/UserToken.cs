@@ -1,16 +1,22 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Tanker
 {
-    public class SDK
+    public class UserToken
     {
+        // Note: those should match the key in the JSON file,
+        // hence the snake case
+        public string delegation_signature { get; set; }
+        public string ephemeral_private_signature_key { get; set; }
+        public string ephemeral_public_signature_key { get; set; }
+        public string user_id { get; set; }
+        public string user_secret { get; set; }
 
-        public static string GenerateUserToken(string userId, string trustchainId, string trustchainPrivateKey)
+        public UserToken() { }
+
+        public UserToken(string userId, string trustchainId, string trustchainPrivateKey)
         {
             byte[] trustchainIdBuf = Convert.FromBase64String(trustchainId);
             byte[] trustchainPrivateKeyBuf = Convert.FromBase64String(trustchainPrivateKey);
@@ -29,16 +35,20 @@ namespace Tanker
             byte[] hash = Crypto.GenericHash(Crypto.ConcatByteArrays(randomBuf, hashedUserId), Crypto.CheckHashBlockSize);
             byte[] userSecret = Crypto.ConcatByteArrays(randomBuf, new byte[] { hash[0] });
 
-            UserToken token = new UserToken();
-            token.delegation_signature = Convert.ToBase64String(delegationSignature);
-            token.ephemeral_private_signature_key = Convert.ToBase64String(ephemeralPrivateKey);
-            token.ephemeral_public_signature_key = Convert.ToBase64String(ephemeralPublicKey);
-            token.user_secret = Convert.ToBase64String(userSecret);
-            token.user_id = Convert.ToBase64String(hashedUserId);
+            this.delegation_signature = Convert.ToBase64String(delegationSignature);
+            this.ephemeral_private_signature_key = Convert.ToBase64String(ephemeralPrivateKey);
+            this.ephemeral_public_signature_key = Convert.ToBase64String(ephemeralPublicKey);
+            this.user_secret = Convert.ToBase64String(userSecret);
+            this.user_id = Convert.ToBase64String(hashedUserId);
 
-            string asJson = JsonConvert.SerializeObject(token);
-            string res = Convert.ToBase64String(Encoding.ASCII.GetBytes(asJson));
-            return res;
         }
+
+        public string Serialize()
+        {
+            string asJson = JsonConvert.SerializeObject(this);
+            return Convert.ToBase64String(Encoding.ASCII.GetBytes(asJson));
+        }
+
     }
+
 }
