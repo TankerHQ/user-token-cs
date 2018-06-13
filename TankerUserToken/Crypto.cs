@@ -14,7 +14,7 @@ namespace Tanker
         public const int CheckHashBlockSize = 16;
         public const int UserSecretSize = 32;
 
-        public static byte[] ConcatByteArrays(byte[] a, byte[]b)
+        public static byte[] ConcatByteArrays(byte[] a, byte[] b)
         {
             byte[] res = new byte[a.Length + b.Length];
             System.Buffer.BlockCopy(a, 0, res, 0, a.Length);

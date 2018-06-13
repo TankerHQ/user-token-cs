@@ -16,7 +16,7 @@ namespace Tanker
 
         public UserToken() { }
 
-        public UserToken(string userId, string trustchainId, string trustchainPrivateKey)
+        public UserToken(string trustchainId, string trustchainPrivateKey, string userId)
         {
             byte[] trustchainIdBuf = Convert.FromBase64String(trustchainId);
             byte[] trustchainPrivateKeyBuf = Convert.FromBase64String(trustchainPrivateKey);

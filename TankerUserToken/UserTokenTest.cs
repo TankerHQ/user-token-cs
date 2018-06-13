@@ -6,10 +6,9 @@ using System.Linq;
 
 
 namespace Tanker
-
- { 
-public class UserTokenTest
-	{
+{ 
+    public class UserTokenTest
+    {
         const string TrustchainId = "AzES0aJwDCej9bQVY9AUMZBCLdX0msEc/TJ4DOhZaQs=";
         const string TrustchainPrivateKey = "cBAq6A00rRNVTHicxNHdDFuq6LNUo6gAz58oKqy9CGd054sGkfPYgXftRCRLfqxeiaoRwQCNLIKxdnuKuf1RAA==";
         const string TrustchainPublicKey = "dOeLBpHz2IF37UQkS36sXomqEcEAjSyCsXZ7irn9UQA=";
@@ -66,7 +65,7 @@ public class UserTokenTest
         private string GenerateTestToken()
         {
             string userId = "steve@tanker.io";
-            var token = new UserToken(userId, TrustchainId, TrustchainPrivateKey);
+            var token = new UserToken(TrustchainId, TrustchainPrivateKey, userId);
             return token.Serialize();
         }
         
