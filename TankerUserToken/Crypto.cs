@@ -47,6 +47,11 @@ namespace Tanker
             return res;
         }
 
+        public static byte[] RandomBytes(int size)
+        {
+            return Sodium.SodiumCore.GetRandomBytes(size);
+        }
+
         public static byte[] SignDetached(byte[] message, byte[] privateKey)
         {
             var signature = Sodium.PublicKeyAuth.SignDetached(message, privateKey);

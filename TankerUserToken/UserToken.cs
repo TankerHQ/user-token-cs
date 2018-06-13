@@ -31,7 +31,7 @@ namespace Tanker
             byte[] toSign = Crypto.ConcatByteArrays(ephemeralPublicKey, hashedUserId);
             byte[] delegationSignature = Crypto.SignDetached(toSign, trustchainPrivateKeyBuf);
 
-            byte[] randomBuf = Sodium.SodiumCore.GetRandomBytes(Crypto.UserSecretSize - 1);
+            byte[] randomBuf = Crypto.RandomBytes(Crypto.UserSecretSize - 1);
             byte[] hash = Crypto.GenericHash(Crypto.ConcatByteArrays(randomBuf, hashedUserId), Crypto.CheckHashBlockSize);
             byte[] userSecret = Crypto.ConcatByteArrays(randomBuf, new byte[] { hash[0] });
 
