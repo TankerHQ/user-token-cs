@@ -6,13 +6,16 @@ namespace Tanker
 {
     public class UserToken
     {
-        // Note: those should match the key in the JSON file,
-        // hence the snake case
-        public string delegation_signature { get; set; }
-        public string ephemeral_private_signature_key { get; set; }
-        public string ephemeral_public_signature_key { get; set; }
-        public string user_id { get; set; }
-        public string user_secret { get; set; }
+        [JsonProperty(PropertyName = "delegation_signature")]
+        public string DelegationSignature { get; set; }
+        [JsonProperty(PropertyName = "ephemeral_private_signature_key")]
+        public string EphemeralPrivateSignatureKey { get; set; }
+        [JsonProperty(PropertyName = "ephemeral_public_signature_key")]
+        public string EphemeralPublicSignatureKey { get; set; }
+        [JsonProperty(PropertyName = "user_id")]
+        public string UserId { get; set; }
+        [JsonProperty(PropertyName = "user_secret")]
+        public string UserSecret { get; set; }
 
         public UserToken() { }
 
@@ -35,11 +38,11 @@ namespace Tanker
             byte[] hash = Crypto.GenericHash(Crypto.ConcatByteArrays(randomBuf, hashedUserId), Crypto.CheckHashBlockSize);
             byte[] userSecret = Crypto.ConcatByteArrays(randomBuf, new byte[] { hash[0] });
 
-            this.delegation_signature = Convert.ToBase64String(delegationSignature);
-            this.ephemeral_private_signature_key = Convert.ToBase64String(ephemeralPrivateKey);
-            this.ephemeral_public_signature_key = Convert.ToBase64String(ephemeralPublicKey);
-            this.user_secret = Convert.ToBase64String(userSecret);
-            this.user_id = Convert.ToBase64String(hashedUserId);
+            this.DelegationSignature = Convert.ToBase64String(delegationSignature);
+            this.EphemeralPrivateSignatureKey = Convert.ToBase64String(ephemeralPrivateKey);
+            this.EphemeralPublicSignatureKey = Convert.ToBase64String(ephemeralPublicKey);
+            this.UserSecret = Convert.ToBase64String(userSecret);
+            this.UserId = Convert.ToBase64String(hashedUserId);
 
         }
 

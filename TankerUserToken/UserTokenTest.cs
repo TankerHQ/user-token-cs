@@ -18,14 +18,14 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string delegationSignature = userToken.delegation_signature;
+            string delegationSignature = userToken.DelegationSignature;
 
-            CheckSignature(
-                userToken.ephemeral_public_signature_key, 
-                userToken.user_id,
-                delegationSignature);
+            Assert.IsTrue(CheckSignature(
+                userToken.EphemeralPublicSignatureKey, 
+                userToken.UserId,
+                delegationSignature));
 
-            Assert.IsTrue(CheckUserSecret(userToken.user_id, userToken.user_secret));
+            Assert.IsTrue(CheckUserSecret(userToken.UserId, userToken.UserSecret));
         }
 
         [Test]
@@ -33,19 +33,16 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string delegationSignature = userToken.delegation_signature;
+            string delegationSignature = userToken.DelegationSignature;
 
             byte[] buf = Convert.FromBase64String(delegationSignature);
             byte[] invalidBuf = CryptoTests.CorruptBuffer(buf);
             string invalidDelegationSignature = Convert.ToBase64String(invalidBuf);
 
-            Assert.Throws(typeof(InvalidSignatureException),
-                delegate { CheckSignature(
-                    userToken.ephemeral_public_signature_key, 
-                    userToken.user_id,
-                    invalidDelegationSignature
-                    ); } );
-
+            Assert.IsFalse(CheckSignature(
+                userToken.EphemeralPublicSignatureKey,
+                userToken.UserId,
+                invalidDelegationSignature));
         }
 
         [Test]
@@ -53,13 +50,13 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string userSecret = userToken.user_secret;
+            string userSecret = userToken.UserSecret;
 
             byte[] buf = Convert.FromBase64String(userSecret);
             byte[] invalidBuf = CryptoTests.CorruptBuffer(buf);
             string invalidUserSecret = Convert.ToBase64String(invalidBuf);
 
-            Assert.IsFalse(CheckUserSecret(userToken.user_id, invalidUserSecret));
+            Assert.IsFalse(CheckUserSecret(userToken.UserId, invalidUserSecret));
         }
 
         private string GenerateTestToken()
@@ -76,7 +73,7 @@ namespace Tanker
             return JsonConvert.DeserializeObject<UserToken>(jsonText);
         }
 
-        private void CheckSignature(string encodedEphemeralPublicSignatureKey, string encodedUserId, string encodedSignature)
+        private bool CheckSignature(string encodedEphemeralPublicSignatureKey, string encodedUserId, string encodedSignature)
         {
             byte[] trustchainPublicKey = Convert.FromBase64String(TrustchainPublicKey);
             byte[] ephemeralPublicSignatureKey = Convert.FromBase64String(encodedEphemeralPublicSignatureKey);
@@ -85,7 +82,7 @@ namespace Tanker
 
             byte[] signedData = Crypto.ConcatByteArrays(ephemeralPublicSignatureKey, userId);
 
-            Crypto.VerifySignDetached(signedData, signature, trustchainPublicKey);
+            return Crypto.VerifySignDetached(signedData, signature, trustchainPublicKey);
         }
 
         private bool CheckUserSecret(string encodedUserId, string encodedUserSecret)
@@ -102,6 +99,5 @@ namespace Tanker
             byte[] control = Crypto.GenericHash(toHash, Crypto.CheckHashBlockSize);
             return userSecret[Crypto.UserSecretSize - 1] == control[0];
         }
-
     }
 }
