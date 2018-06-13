@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Crypto.cs" />
     <Compile Include="CryptoTests.cs" />
+    <Compile Include="KeyPair.cs" />
     <Compile Include="UserTokenTest.cs" />
     <Compile Include="UserToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -38,9 +38,13 @@ namespace Tanker
             return Sodium.GenericHash.Hash(message, null, size);
         }
 
-        public static Sodium.KeyPair SignKeyPair()
+        public static KeyPair SignKeyPair()
         {
-            return Sodium.PublicKeyAuth.GenerateKeyPair();
+            var sodiumKeyPair = Sodium.PublicKeyAuth.GenerateKeyPair();
+            KeyPair res = new KeyPair();
+            res.PrivateKey = sodiumKeyPair.PrivateKey;
+            res.PublicKey = sodiumKeyPair.PublicKey;
+            return res;
         }
 
         public static byte[] SignDetached(byte[] message, byte[] privateKey)
