@@ -59,7 +59,7 @@ namespace Tanker
                 delegate { Crypto.VerifySignDetached(message, invalidSignature, keyPair.PublicKey); } );
         }
 
-        private byte[] CorruptBuffer(byte[] buffer)
+        public static byte[] CorruptBuffer(byte[] buffer)
         {
             byte[] res = buffer;
             res[0] = buffer[0] = 1;
