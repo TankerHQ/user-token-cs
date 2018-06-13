@@ -22,6 +22,17 @@ namespace Tanker
             return res;
         }
 
+        public static byte[] FromHex(string hexString)
+        {
+            int numChars = hexString.Length;
+            byte[] res = new byte[numChars / 2];
+            for (int i = 0; i < numChars; i += 2)
+            {
+                res[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return res;
+        }
+
         public static byte[] GenericHash(byte[] message, int size)
         {
             return Sodium.GenericHash.Hash(message, null, size);

@@ -11,17 +11,12 @@ namespace Tanker
         public void TestHash()
         {
             string hexVector = "BA80A53F981C4D0D6A2797B69F12F6E94C212F14685AC4B74B12BB6FDBFFA2D17D87C5392AAB792DC252D5DE4533CC9518D38AA8DBF1925AB92386EDD4009923";
-            int numChars = hexVector.Length;
-            byte[] vector = new byte[numChars / 2];
-            for (int i = 0; i < numChars; i +=2)
-            {
-                vector[i / 2] = Convert.ToByte(hexVector.Substring(i, 2), 16);
-            }
+            byte[] expected = Crypto.FromHex(hexVector);
 
-            byte[] buffer = Encoding.ASCII.GetBytes("abc");
-            byte[] output = Crypto.GenericHash(buffer, 64);
+            byte[] toHash = Encoding.ASCII.GetBytes("abc");
+            byte[] actual = Crypto.GenericHash(toHash, 64);
 
-            Assert.AreEqual(output, vector);
+            Assert.AreEqual(actual, expected);
         }
 
         [Test]
