@@ -20,10 +20,10 @@ namespace Tanker
             UserToken userToken = ParseBase64Token(encodedToken);
             string delegationSignature = userToken.delegation_signature;
 
-            CheckSignature(
+            Assert.IsTrue(CheckSignature(
                 userToken.ephemeral_public_signature_key, 
                 userToken.user_id,
-                delegationSignature);
+                delegationSignature));
 
             Assert.IsTrue(CheckUserSecret(userToken.user_id, userToken.user_secret));
         }
@@ -39,13 +39,10 @@ namespace Tanker
             byte[] invalidBuf = CryptoTests.CorruptBuffer(buf);
             string invalidDelegationSignature = Convert.ToBase64String(invalidBuf);
 
-            Assert.Throws(typeof(InvalidSignatureException),
-                delegate { CheckSignature(
-                    userToken.ephemeral_public_signature_key, 
-                    userToken.user_id,
-                    invalidDelegationSignature
-                    ); } );
-
+            Assert.IsFalse(CheckSignature(
+                userToken.ephemeral_public_signature_key, 
+                userToken.user_id,
+                invalidDelegationSignature));
         }
 
         [Test]
@@ -76,7 +73,7 @@ namespace Tanker
             return JsonConvert.DeserializeObject<UserToken>(jsonText);
         }
 
-        private void CheckSignature(string encodedEphemeralPublicSignatureKey, string encodedUserId, string encodedSignature)
+        private bool CheckSignature(string encodedEphemeralPublicSignatureKey, string encodedUserId, string encodedSignature)
         {
             byte[] trustchainPublicKey = Convert.FromBase64String(TrustchainPublicKey);
             byte[] ephemeralPublicSignatureKey = Convert.FromBase64String(encodedEphemeralPublicSignatureKey);
@@ -85,7 +82,7 @@ namespace Tanker
 
             byte[] signedData = Crypto.ConcatByteArrays(ephemeralPublicSignatureKey, userId);
 
-            Crypto.VerifySignDetached(signedData, signature, trustchainPublicKey);
+            return Crypto.VerifySignDetached(signedData, signature, trustchainPublicKey);
         }
 
         private bool CheckUserSecret(string encodedUserId, string encodedUserSecret)
@@ -102,6 +99,5 @@ namespace Tanker
             byte[] control = Crypto.GenericHash(toHash, Crypto.CheckHashBlockSize);
             return userSecret[Crypto.UserSecretSize - 1] == control[0];
         }
-
     }
 }

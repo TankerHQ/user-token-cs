@@ -26,7 +26,7 @@ namespace Tanker
             KeyPair keyPair = Crypto.SignKeyPair();
             byte[] signature = Crypto.SignDetached(message, keyPair.PrivateKey);
 
-            Crypto.VerifySignDetached(message, signature, keyPair.PublicKey);
+            Assert.IsTrue(Crypto.VerifySignDetached(message, signature, keyPair.PublicKey));
         }
 
         [Test]
@@ -38,9 +38,7 @@ namespace Tanker
 
             byte[] invalidMessage = Encoding.ASCII.GetBytes("m3ssage");
 
-            Assert.Throws(typeof(InvalidSignatureException),
-                delegate { Crypto.VerifySignDetached(invalidMessage, signature, keyPair.PublicKey); } );
-
+            Assert.IsFalse(Crypto.VerifySignDetached(invalidMessage, signature, keyPair.PublicKey));
         }
 
         [Test]
@@ -50,8 +48,7 @@ namespace Tanker
             KeyPair keyPair = Crypto.SignKeyPair();
             byte[] signature = Crypto.SignDetached(message, keyPair.PrivateKey);
             byte[] invalidSignature = CorruptBuffer(signature);
-            Assert.Throws(typeof(InvalidSignatureException),
-                delegate { Crypto.VerifySignDetached(message, invalidSignature, keyPair.PublicKey); } );
+            Assert.IsFalse(Crypto.VerifySignDetached(message, invalidSignature, keyPair.PublicKey));
         }
 
         public static byte[] CorruptBuffer(byte[] buffer)

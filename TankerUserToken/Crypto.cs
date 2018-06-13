@@ -2,12 +2,6 @@
 
 namespace Tanker
 {
-    public class InvalidSignatureException: Exception
-    {
-        public InvalidSignatureException()
-        { }
-    }
-
     public class Crypto
     {
         public const int BlockHashSize = 32;
@@ -58,13 +52,10 @@ namespace Tanker
             return signature;
         }
 
-        public static void VerifySignDetached(byte[] message, byte[] signature, byte[] publicKey)
+        public static bool VerifySignDetached(byte[] message, byte[] signature, byte[] publicKey)
         {
             var ok = Sodium.PublicKeyAuth.VerifyDetached(signature, message, publicKey);
-            if (!ok)
-            {
-                throw new InvalidSignatureException();
-            }
+            return ok;
         }
     }
 }
