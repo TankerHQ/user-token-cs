@@ -18,14 +18,14 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string delegationSignature = userToken.delegation_signature;
+            string delegationSignature = userToken.DelegationSignature;
 
             Assert.IsTrue(CheckSignature(
-                userToken.ephemeral_public_signature_key, 
-                userToken.user_id,
+                userToken.EphemeralPublicSignatureKey, 
+                userToken.UserId,
                 delegationSignature));
 
-            Assert.IsTrue(CheckUserSecret(userToken.user_id, userToken.user_secret));
+            Assert.IsTrue(CheckUserSecret(userToken.UserId, userToken.UserSecret));
         }
 
         [Test]
@@ -33,15 +33,15 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string delegationSignature = userToken.delegation_signature;
+            string delegationSignature = userToken.DelegationSignature;
 
             byte[] buf = Convert.FromBase64String(delegationSignature);
             byte[] invalidBuf = CryptoTests.CorruptBuffer(buf);
             string invalidDelegationSignature = Convert.ToBase64String(invalidBuf);
 
             Assert.IsFalse(CheckSignature(
-                userToken.ephemeral_public_signature_key, 
-                userToken.user_id,
+                userToken.EphemeralPublicSignatureKey,
+                userToken.UserId,
                 invalidDelegationSignature));
         }
 
@@ -50,13 +50,13 @@ namespace Tanker
         {
             string encodedToken = GenerateTestToken();
             UserToken userToken = ParseBase64Token(encodedToken);
-            string userSecret = userToken.user_secret;
+            string userSecret = userToken.UserSecret;
 
             byte[] buf = Convert.FromBase64String(userSecret);
             byte[] invalidBuf = CryptoTests.CorruptBuffer(buf);
             string invalidUserSecret = Convert.ToBase64String(invalidBuf);
 
-            Assert.IsFalse(CheckUserSecret(userToken.user_id, invalidUserSecret));
+            Assert.IsFalse(CheckUserSecret(userToken.UserId, invalidUserSecret));
         }
 
         private string GenerateTestToken()
