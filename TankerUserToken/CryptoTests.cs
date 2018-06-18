@@ -8,7 +8,7 @@ namespace Tanker
 {
     namespace Crypto
     {
-        class Tests
+        internal class Tests
         {
             [Test]
             public void TestHash()
