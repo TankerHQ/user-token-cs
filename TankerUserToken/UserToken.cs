@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Text;
+using Tanker.Crypto;
 
 namespace Tanker
 {
@@ -25,18 +26,18 @@ namespace Tanker
             byte[] trustchainPrivateKeyBuf = Convert.FromBase64String(trustchainPrivateKey);
 
             byte[] userIdBuf = Encoding.Unicode.GetBytes(userId);
-            var toHash = Crypto.ConcatByteArrays(userIdBuf, trustchainIdBuf);
-            byte[] hashedUserId = Crypto.GenericHash(toHash, Crypto.BlockHashSize);
+            var toHash = CryptoCore.ConcatByteArrays(userIdBuf, trustchainIdBuf);
+            byte[] hashedUserId = CryptoCore.GenericHash(toHash, CryptoCore.BlockHashSize);
 
-            var keyPair = Crypto.SignKeyPair();
+            var keyPair = CryptoCore.SignKeyPair();
             byte[] ephemeralPrivateKey = keyPair.PrivateKey;
             byte[] ephemeralPublicKey = keyPair.PublicKey;
-            byte[] toSign = Crypto.ConcatByteArrays(ephemeralPublicKey, hashedUserId);
-            byte[] delegationSignature = Crypto.SignDetached(toSign, trustchainPrivateKeyBuf);
+            byte[] toSign = CryptoCore.ConcatByteArrays(ephemeralPublicKey, hashedUserId);
+            byte[] delegationSignature = CryptoCore.SignDetached(toSign, trustchainPrivateKeyBuf);
 
-            byte[] randomBuf = Crypto.RandomBytes(Crypto.UserSecretSize - 1);
-            byte[] hash = Crypto.GenericHash(Crypto.ConcatByteArrays(randomBuf, hashedUserId), Crypto.CheckHashBlockSize);
-            byte[] userSecret = Crypto.ConcatByteArrays(randomBuf, new byte[] { hash[0] });
+            byte[] randomBuf = CryptoCore.RandomBytes(CryptoCore.UserSecretSize - 1);
+            byte[] hash = CryptoCore.GenericHash(CryptoCore.ConcatByteArrays(randomBuf, hashedUserId), CryptoCore.CheckHashBlockSize);
+            byte[] userSecret = CryptoCore.ConcatByteArrays(randomBuf, new byte[] { hash[0] });
 
             this.DelegationSignature = Convert.ToBase64String(delegationSignature);
             this.EphemeralPrivateSignatureKey = Convert.ToBase64String(ephemeralPrivateKey);
