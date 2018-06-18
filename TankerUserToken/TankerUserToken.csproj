@@ -9,7 +9,7 @@
     <ProjectGuid>{BA1338AE-8385-4067-BBE8-A6462D8C666A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TankerUserToken</RootNamespace>
+    <RootNamespace>Tanker</RootNamespace>
     <AssemblyName>TankerUserToken</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
