@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TankerUserToken")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tanker UserToken")]
+[assembly: AssemblyDescription("Small library for Tanker UserToken generation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TankerUserToken")]
+[assembly: AssemblyCompany("Kontrol S.A.S.")]
+[assembly: AssemblyProduct("Tanker")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

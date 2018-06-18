@@ -1,8 +1,11 @@
 ﻿namespace Tanker
 {
-    public class KeyPair
+    namespace Crypto
     {
-        public byte[] PrivateKey { get; set;  }
-        public byte[] PublicKey { get; set; }
+        public class KeyPair
+        {
+            public byte[] PrivateKey { get; set; }
+            public byte[] PublicKey { get; set; }
+        }
     }
 }
