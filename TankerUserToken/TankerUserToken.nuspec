@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/SuperTanker/user-token-cs</projectUrl>
     <iconUrl>https://tanker.io/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Small library for Tanker UserToken generation</description>
+    <description>$description$</description>
     <releaseNotes>First release.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>Tanker UserToken</tags>
