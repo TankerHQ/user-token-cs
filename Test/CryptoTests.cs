@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Sodium;
 using System;
 using System.Text;
 using Tanker.Crypto;

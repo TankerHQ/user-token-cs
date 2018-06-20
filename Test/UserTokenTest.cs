@@ -7,9 +7,8 @@ using Tanker.Crypto;
 
 
 namespace Tanker
-{ 
-
-    internal class UserTokenTest
+{
+    class UserTokenTest
     {
         const string TrustchainId = "AzES0aJwDCej9bQVY9AUMZBCLdX0msEc/TJ4DOhZaQs=";
         const string TrustchainPrivateKey = "cBAq6A00rRNVTHicxNHdDFuq6LNUo6gAz58oKqy9CGd054sGkfPYgXftRCRLfqxeiaoRwQCNLIKxdnuKuf1RAA==";
