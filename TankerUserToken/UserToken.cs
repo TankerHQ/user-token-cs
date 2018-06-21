@@ -2,21 +2,24 @@
 using System;
 using System.Text;
 using Tanker.Crypto;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Tanker.UserToken.Test")]
 
 namespace Tanker
 {
     public class UserToken
     {
         [JsonProperty(PropertyName = "delegation_signature")]
-        public string DelegationSignature { get; set; }
+        public string DelegationSignature { protected internal get; set; }
         [JsonProperty(PropertyName = "ephemeral_private_signature_key")]
-        public string EphemeralPrivateSignatureKey { get; set; }
+        public string EphemeralPrivateSignatureKey { protected internal get; set; }
         [JsonProperty(PropertyName = "ephemeral_public_signature_key")]
-        public string EphemeralPublicSignatureKey { get; set; }
+        public string EphemeralPublicSignatureKey { protected internal get; set; }
         [JsonProperty(PropertyName = "user_id")]
-        public string UserId { get; set; }
+        public string UserId { protected internal get;  set; }
         [JsonProperty(PropertyName = "user_secret")]
-        public string UserSecret { get; set; }
+        public string UserSecret { protected internal get; set; }
 
         public UserToken() { }
 
