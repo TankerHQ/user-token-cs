@@ -28,7 +28,7 @@ namespace Tanker
             byte[] trustchainIdBuf = Convert.FromBase64String(trustchainId);
             byte[] trustchainPrivateKeyBuf = Convert.FromBase64String(trustchainPrivateKey);
 
-            byte[] userIdBuf = Encoding.Unicode.GetBytes(userId);
+            byte[] userIdBuf = Encoding.UTF8.GetBytes(userId);
             var toHash = CryptoCore.ConcatByteArrays(userIdBuf, trustchainIdBuf);
             byte[] hashedUserId = CryptoCore.GenericHash(toHash, CryptoCore.BlockHashSize);
 
