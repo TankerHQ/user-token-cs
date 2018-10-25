@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>Tanker</authors>
     <owners>Tanker</owners>
-    <projectUrl>https://github.com/SuperTanker/user-token-cs</projectUrl>
+    <projectUrl>https://github.com/TankerHQ/user-token-cs</projectUrl>
     <iconUrl>https://tanker.io/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
