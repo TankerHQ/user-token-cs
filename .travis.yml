@@ -1,0 +1,12 @@
+language: csharp
+solution: TankerUserToken.sln
+
+dist: xenial
+before_install:
+  - sudo apt-get update
+  - sudo apt install -y libsodium-dev
+install:
+  - nuget restore TankerUserToken.sln
+script:
+  - msbuild /p:Configuration=Release TankerUserToken.sln
+  - mono ./packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe Test/bin/Release/Tanker.UserToken.Test.dll
