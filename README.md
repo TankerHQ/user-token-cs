@@ -1,3 +1,5 @@
+[![Build](https://img.shields.io/travis/TankerHQ/user-token-cs/master.svg)](https://travis-ci.org/TankerHQ/user-token-cs)
+
 # User Token
 
 User token generation in C# for the [Tanker SDK](https://tanker.io/docs/latest).
